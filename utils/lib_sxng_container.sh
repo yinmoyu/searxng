@@ -19,24 +19,14 @@ container.build() {
     local variant
     local platform
 
-    # Check if git is installed
-    if ! command -v git &>/dev/null; then
-        die 1 "Git is not installed"
-    fi
+    required_commands git
 
     # Check if podman or docker is installed
-    if [ "$1" = "docker" ]; then
-        if command -v docker &>/dev/null; then
-            container_engine="docker"
-        else
-            die 1 "Docker is not installed"
+    if [ "$1" = "podman" ] || [ "$1" = "docker" ]; then
+        if ! command -v "$1" &>/dev/null; then
+            die 42 "$1 is not installed"
         fi
-    elif [ "$1" = "podman" ]; then
-        if command -v podman &>/dev/null; then
-            container_engine="podman"
-        else
-            die 1 "Podman is not installed"
-        fi
+        container_engine="$1"
     else
         # If no explicit engine is passed, prioritize podman over docker
         if command -v podman &>/dev/null; then
@@ -44,7 +34,7 @@ container.build() {
         elif command -v docker &>/dev/null; then
             container_engine="docker"
         else
-            die 1 "Podman/Docker is not installed"
+            die 42 "no compatible container engine is installed (podman or docker)"
         fi
     fi
     info_msg "Selected engine: $container_engine"
@@ -112,7 +102,6 @@ container.build() {
 
         if [ "$GITHUB_ACTIONS" = "true" ]; then
             params_build_builder+=" --cache-from=ghcr.io/$CONTAINER_IMAGE_ORGANIZATION/cache --cache-to=ghcr.io/$CONTAINER_IMAGE_ORGANIZATION/cache"
-            params_build+=" --cache-from=ghcr.io/$CONTAINER_IMAGE_ORGANIZATION/cache --cache-to=ghcr.io/$CONTAINER_IMAGE_ORGANIZATION/cache"
 
             # Tags
             params_build+=" --tag=ghcr.io/$CONTAINER_IMAGE_ORGANIZATION/cache:$CONTAINER_IMAGE_NAME-$arch$variant"
@@ -125,7 +114,6 @@ container.build() {
         # shellcheck disable=SC2086
         "$container_engine" $params_build_builder \
             --build-arg="TIMESTAMP_SETTINGS=$(git log -1 --format="%cd" --date=unix -- ./searx/settings.yml)" \
-            --build-arg="TIMESTAMP_UWSGI=$(git log -1 --format="%cd" --date=unix -- ./container/uwsgi.ini)" \
             --tag="localhost/$CONTAINER_IMAGE_ORGANIZATION/$CONTAINER_IMAGE_NAME:builder" \
             --file="./container/$dockerfile" \
             .
@@ -133,6 +121,8 @@ container.build() {
 
         # shellcheck disable=SC2086
         "$container_engine" $params_build \
+            --build-arg="TIMESTAMP_SETTINGS=$(git log -1 --format="%cd" --date=unix -- ./searx/settings.yml)" \
+            --build-arg="TIMESTAMP_UWSGI=$(git log -1 --format="%cd" --date=unix -- ./container/config/uwsgi.ini)" \
             --build-arg="GIT_URL=$GIT_URL" \
             --build-arg="SEARXNG_GIT_VERSION=$VERSION_STRING" \
             --build-arg="LABEL_DATE=$(date -u +%Y-%m-%dT%H:%M:%SZ)" \
@@ -146,13 +136,13 @@ container.build() {
             "$container_engine" push "ghcr.io/$CONTAINER_IMAGE_ORGANIZATION/cache:$CONTAINER_IMAGE_NAME-$arch$variant"
 
             # Output to GHA
-            {
-                echo "version_string=$VERSION_STRING"
-                echo "version_tag=$VERSION_TAG"
-                echo "docker_tag=$DOCKER_TAG"
-                echo "git_url=$GIT_URL"
-                echo "git_branch=$GIT_BRANCH"
-            } >>"$GITHUB_OUTPUT"
+            cat <<EOF >>"$GITHUB_OUTPUT"
+version_string=$VERSION_STRING
+version_tag=$VERSION_TAG
+docker_tag=$DOCKER_TAG
+git_url=$GIT_URL
+git_branch=$GIT_BRANCH
+EOF
         fi
     )
     dump_return $?
@@ -168,10 +158,7 @@ container.test() {
         die 1 "This command is intended to be run in GitHub Actions"
     fi
 
-    # Check if podman is installed
-    if ! command -v podman &>/dev/null; then
-        die 1 "podman is not installed"
-    fi
+    required_commands podman
 
     # Setup arch specific
     case $parch in
@@ -234,10 +221,7 @@ container.push() {
         die 1 "This command is intended to be run in GitHub Actions"
     fi
 
-    # Check if podman is installed
-    if ! command -v podman &>/dev/null; then
-        die 1 "podman is not installed"
-    fi
+    required_commands podman
 
     for arch in "${release_archs[@]}"; do
         case $arch in
@@ -272,8 +256,7 @@ container.push() {
         done
 
         # Manifest tags
-        release_tags=("latest")
-        release_tags+=("$DOCKER_TAG")
+        release_tags=("latest" "$DOCKER_TAG")
 
         # Create manifests
         for tag in "${release_tags[@]}"; do
@@ -291,13 +274,18 @@ container.push() {
 
         podman image list
 
-        # Push manifests
-        for tag in "${release_tags[@]}"; do
-            build_msg CONTAINER "Pushing manifest with tag: $tag"
+        # Remote registries
+        release_registries=("ghcr.io" "docker.io")
 
-            podman manifest push \
-                "localhost/$CONTAINER_IMAGE_ORGANIZATION/$CONTAINER_IMAGE_NAME:$tag" \
-                "docker://docker.io/$CONTAINER_IMAGE_ORGANIZATION/$CONTAINER_IMAGE_NAME:$tag"
+        # Push manifests
+        for registry in "${release_registries[@]}"; do
+            for tag in "${release_tags[@]}"; do
+                build_msg CONTAINER "Pushing manifest $tag to $registry"
+
+                podman manifest push \
+                    "localhost/$CONTAINER_IMAGE_ORGANIZATION/$CONTAINER_IMAGE_NAME:$tag" \
+                    "docker://$registry/$CONTAINER_IMAGE_ORGANIZATION/$CONTAINER_IMAGE_NAME:$tag"
+            done
         done
     )
     dump_return $?

@@ -21,22 +21,23 @@
 # Anonymous <anonymous@users.noreply.translate.codeberg.org>, 2025.
 # shoko <shoko@users.noreply.translate.codeberg.org>, 2025.
 # RoyBarina <roybarina@users.noreply.translate.codeberg.org>, 2025.
+# ngf <ngf@noreply.codeberg.org>, 2025.
 msgid ""
 msgstr ""
-"Project-Id-Version:  searx\n"
+"Project-Id-Version: searx\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2025-03-29 09:21+0000\n"
-"PO-Revision-Date: 2025-01-30 05:21+0000\n"
-"Last-Translator: RoyBarina "
-"<roybarina@users.noreply.translate.codeberg.org>\n"
+"POT-Creation-Date: 2025-05-13 19:13+0000\n"
+"PO-Revision-Date: 2025-05-27 03:58+0000\n"
+"Last-Translator: ngf <ngf@noreply.codeberg.org>\n"
+"Language-Team: Hebrew <https://translate.codeberg.org/projects/searxng/"
+"searxng/he/>\n"
 "Language: he\n"
-"Language-Team: Hebrew "
-"<https://translate.codeberg.org/projects/searxng/searxng/he/>\n"
-"Plural-Forms: nplurals=4; plural=(n == 1) ? 0 : ((n == 2) ? 1 : ((n > 10 "
-"&& n % 10 == 0) ? 2 : 3));\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=4; plural=(n == 1) ? 0 : ((n == 2) ? 1 : ((n > 10 && "
+"n % 10 == 0) ? 2 : 3));\n"
+"X-Generator: Weblate 5.11.4\n"
 "Generated-By: Babel 2.17.0\n"
 
 #. CONSTANT_NAMES['NO_SUBGROUPING']
@@ -80,7 +81,7 @@ msgid "videos"
 msgstr "וידאו"
 
 #. CATEGORY_NAMES['RADIO']
-#: searx/engines/radio_browser.py:103 searx/searxng.msg
+#: searx/engines/radio_browser.py:151 searx/searxng.msg
 msgid "radio"
 msgstr "רדיו"
 
@@ -357,93 +358,93 @@ msgstr "סגור"
 msgid "answered"
 msgstr "נענו"
 
-#: searx/webapp.py:312
+#: searx/webapp.py:291
 msgid "No item found"
 msgstr "לא נמצא פריט"
 
 #: searx/engines/qwant.py:291
-#: searx/templates/simple/result_templates/images.html:23 searx/webapp.py:314
+#: searx/templates/simple/result_templates/images.html:23 searx/webapp.py:293
 msgid "Source"
 msgstr "מקור"
 
-#: searx/webapp.py:316
+#: searx/webapp.py:295
 msgid "Error loading the next page"
 msgstr "שגיאה בטעינת העמוד הבא"
 
-#: searx/webapp.py:469 searx/webapp.py:875
+#: searx/webapp.py:446 searx/webapp.py:844
 msgid "Invalid settings, please edit your preferences"
 msgstr "הגדרות לא תקינות, עליך לתקן את ההעדפות שלך"
 
-#: searx/webapp.py:485
+#: searx/webapp.py:462
 msgid "Invalid settings"
 msgstr "הגדרות לא תקינות"
 
-#: searx/webapp.py:562 searx/webapp.py:652
+#: searx/webapp.py:539 searx/webapp.py:629
 msgid "search error"
 msgstr "שגיאת חיפוש"
 
-#: searx/webutils.py:36
+#: searx/webutils.py:35
 msgid "timeout"
 msgstr "פקיעת זמן"
 
-#: searx/webutils.py:37
+#: searx/webutils.py:36
 msgid "parsing error"
 msgstr "שגיאת ניתוח"
 
-#: searx/webutils.py:38
+#: searx/webutils.py:37
 msgid "HTTP protocol error"
 msgstr "שגיאת פרוטוקול HTTP"
 
-#: searx/webutils.py:39
+#: searx/webutils.py:38
 msgid "network error"
 msgstr "שגיאת רשת תקשורת"
 
-#: searx/webutils.py:40
+#: searx/webutils.py:39
 msgid "SSL error: certificate validation has failed"
 msgstr "שגיאת SSL: אימות התעודה נכשל"
 
-#: searx/webutils.py:42
+#: searx/webutils.py:41
 msgid "unexpected crash"
 msgstr "קריסה לא צפויה"
 
-#: searx/webutils.py:49
+#: searx/webutils.py:48
 msgid "HTTP error"
 msgstr "שגיאת HTTP"
 
-#: searx/webutils.py:50
+#: searx/webutils.py:49
 msgid "HTTP connection error"
 msgstr "שגיאת חיבור HTTP"
 
-#: searx/webutils.py:56
+#: searx/webutils.py:55
 msgid "proxy error"
 msgstr "שגיאת פרוקסי"
 
-#: searx/webutils.py:57
+#: searx/webutils.py:56
 msgid "CAPTCHA"
 msgstr "CAPTCHA"
 
-#: searx/webutils.py:58
+#: searx/webutils.py:57
 msgid "too many requests"
 msgstr "יותר מדי בקשות"
 
-#: searx/webutils.py:59
+#: searx/webutils.py:58
 msgid "access denied"
 msgstr "הגישה נדחתה"
 
-#: searx/webutils.py:60
+#: searx/webutils.py:59
 msgid "server API error"
 msgstr "שגיאת API שרת"
 
-#: searx/webutils.py:79
+#: searx/webutils.py:78
 msgid "Suspended"
 msgstr "מושהה"
 
-#: searx/webutils.py:314
+#: searx/webutils.py:313
 #, python-brace-format
 msgid "{minutes} minute(s) ago"
 msgstr "לפני {minutes} דקות"
 
-#: searx/webutils.py:315
+#: searx/webutils.py:314
 #, python-brace-format
 msgid "{hours} hour(s), {minutes} minute(s) ago"
 msgstr "לפני {hours} שעות, {minutes} דקות"
@@ -474,15 +475,15 @@ msgstr "רשומה זו הוחלפה על ידי"
 msgid "Channel"
 msgstr "ערוץ"
 
-#: searx/engines/radio_browser.py:105
+#: searx/engines/radio_browser.py:153
 msgid "bitrate"
 msgstr "קצב נתונים"
 
-#: searx/engines/radio_browser.py:106
+#: searx/engines/radio_browser.py:154
 msgid "votes"
 msgstr "הצבעות"
 
-#: searx/engines/radio_browser.py:107
+#: searx/engines/radio_browser.py:155
 msgid "clicks"
 msgstr "לחיצות"
 
@@ -491,7 +492,7 @@ msgstr "לחיצות"
 msgid "Language"
 msgstr "שפה"
 
-#: searx/engines/semantic_scholar.py:79
+#: searx/engines/semantic_scholar.py:101
 #, python-brace-format
 msgid ""
 "{numCitations} citations from the year {firstCitationVelocityYear} to "
@@ -532,15 +533,15 @@ msgstr "איכות קובץ"
 
 #: searx/plugins/ahmia_filter.py:32
 msgid "Ahmia blacklist"
-msgstr ""
+msgstr "הרשימה השחורה של Ahmia"
 
 #: searx/plugins/ahmia_filter.py:33
 msgid "Filter out onion results that appear in Ahmia's blacklist."
-msgstr ""
+msgstr "מסנן תוצאות onion שמופיעות ברשימת השחורה של Ahmia."
 
 #: searx/plugins/calculator.py:38
 msgid "Basic Calculator"
-msgstr ""
+msgstr "מחשבון בסיסי"
 
 #: searx/plugins/calculator.py:39
 msgid "Calculate mathematical expressions via the search bar"
@@ -556,7 +557,7 @@ msgstr "ממיר מחרוזות לתוך hash digests (לקט גיבוב) שונ
 
 #: searx/plugins/hash_plugin.py:62
 msgid "hash digest"
-msgstr "hash digest"
+msgstr "דגימת האש"
 
 #: searx/plugins/hostnames.py:123
 msgid "Hostnames plugin"
@@ -632,7 +633,7 @@ msgstr "הסר ארגומנטי איתור מתוך URL מוחזר"
 
 #: searx/plugins/unit_converter.py:49
 msgid "Unit converter plugin"
-msgstr ""
+msgstr "תוסף המרה של יחידות"
 
 #: searx/plugins/unit_converter.py:50
 msgid "Convert between units"
@@ -715,10 +716,6 @@ msgstr "מחבר"
 #: searx/templates/simple/macros.html:50
 msgid "cached"
 msgstr "מוטמן"
-
-#: searx/templates/simple/macros.html:50
-msgid "proxied"
-msgstr "פרוקסי"
 
 #: searx/templates/simple/new_issue.html:64
 msgid "Start submitting a new issue on GitHub"
@@ -1181,6 +1178,8 @@ msgid ""
 "A URL containing your preferences. This URL can be used to restore your "
 "settings on a different device."
 msgstr ""
+"כתובת URL המכילה את ההעדפות שלך. ניתן להשתמש בכתובת URL זו כדי לשחזר את "
+"ההגדרות שלך במכשיר אחר."
 
 #: searx/templates/simple/preferences/cookies.html:46
 msgid "Copy preferences hash"
@@ -2060,3 +2059,5 @@ msgstr "הסתר וידאו"
 #~ " בכתובת ההעדפות כדי לסנכרן העדפות בין"
 #~ " מכשירים."
 
+#~ msgid "proxied"
+#~ msgstr "פרוקסי"
