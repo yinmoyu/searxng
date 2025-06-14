@@ -54,7 +54,7 @@ ci.test: test.yamllint test.black test.types.ci  test.pylint test.unit test.robo
 test:    test.yamllint test.black test.types.dev test.pylint test.unit test.robot test.rst test.shell
 test.shell:
 	$(Q)shellcheck -x -s dash \
-		container/docker-entrypoint.sh
+		container/entrypoint.sh
 	$(Q)shellcheck -x -s bash \
 		utils/brand.sh \
 		$(MTOOLS) \
@@ -65,10 +65,7 @@ test.shell:
 		utils/lib_redis.sh \
 		utils/searxng.sh \
 		utils/lxc.sh \
-		utils/lxc-searxng.env \
-		utils/searx.sh \
-		utils/filtron.sh \
-		utils/morty.sh
+		utils/lxc-searxng.env
 	$(Q)$(MTOOLS) build_msg TEST "$@ OK"
 
 
